@@ -35,6 +35,7 @@
             this.lstThuMoi = new System.Windows.Forms.ListBox();
             this.lstDanhSach = new System.Windows.Forms.ListBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.button1 = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.lblTime = new System.Windows.Forms.Label();
@@ -48,8 +49,9 @@
             this.mnuCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCup = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPaster = new System.Windows.Forms.ToolStripMenuItem();
-            this.button1 = new System.Windows.Forms.Button();
+            this.mnuDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.btnXoa = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -95,10 +97,23 @@
             this.lstDanhSach.Name = "lstDanhSach";
             this.lstDanhSach.Size = new System.Drawing.Size(235, 191);
             this.lstDanhSach.TabIndex = 3;
-            
             this.lstDanhSach.DragDrop += new System.Windows.Forms.DragEventHandler(this.lstDanhSach_DragDrop);
             this.lstDanhSach.DragEnter += new System.Windows.Forms.DragEventHandler(this.ListBox_DragEnter);
             this.lstDanhSach.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ListBox_MouseDown);
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.ImageIndex = 0;
+            this.button1.ImageList = this.imageList1;
+            this.button1.Location = new System.Drawing.Point(450, 247);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(26, 28);
+            this.button1.TabIndex = 6;
+            this.toolTip1.SetToolTip(this.button1, "lưu danh sách thú vào file danhsachthu.txt");
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Save);
             // 
             // imageList1
             // 
@@ -117,6 +132,7 @@
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.lblTime, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.button1, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.btnXoa, 0, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -193,7 +209,8 @@
             this.syưToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuCopy,
             this.mnuCup,
-            this.mnuPaster});
+            this.mnuPaster,
+            this.mnuDelete});
             this.syưToolStripMenuItem.Name = "syưToolStripMenuItem";
             this.syưToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
             this.syưToolStripMenuItem.Text = "Sửa đổi";
@@ -219,24 +236,27 @@
             this.mnuPaster.Size = new System.Drawing.Size(136, 22);
             this.mnuPaster.Text = "Dán";
             // 
-            // button1
+            // mnuDelete
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.ImageIndex = 0;
-            this.button1.ImageList = this.imageList1;
-            this.button1.Location = new System.Drawing.Point(450, 247);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(26, 28);
-            this.button1.TabIndex = 6;
-            this.toolTip1.SetToolTip(this.button1, "lưu danh sách thú vào file danhsachthu.txt");
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.Save);
+            this.mnuDelete.Name = "mnuDelete";
+            this.mnuDelete.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.mnuDelete.Size = new System.Drawing.Size(136, 22);
+            this.mnuDelete.Text = "xóa";
             // 
             // timer1
             // 
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // btnXoa
+            // 
+            this.btnXoa.Location = new System.Drawing.Point(3, 247);
+            this.btnXoa.Name = "btnXoa";
+            this.btnXoa.Size = new System.Drawing.Size(75, 23);
+            this.btnXoa.TabIndex = 7;
+            this.btnXoa.Text = "Xóa";
+            this.btnXoa.UseVisualStyleBackColor = true;
+            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
             // 
             // Form1
             // 
@@ -251,6 +271,7 @@
             this.MinimumSize = new System.Drawing.Size(289, 235);
             this.Name = "Form1";
             this.Text = "So Thu Xi Gon";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -282,6 +303,8 @@
         private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ToolStripMenuItem mnuDelete;
+        private System.Windows.Forms.Button btnXoa;
     }
 }
 

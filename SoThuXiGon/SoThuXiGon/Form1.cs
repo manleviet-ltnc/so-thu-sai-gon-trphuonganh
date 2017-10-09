@@ -18,6 +18,11 @@ namespace SoThuXiGon
             InitializeComponent();
         }
         
+        private void btnChon_Click(object sender, EventArgs e)
+        {
+            lstDanhSach.Items.Add(lstThuMoi.SelectedItem);
+        }
+
         private void ListBox_MouseDown(object sender, MouseEventArgs e)
         {
             ListBox lb = (ListBox)sender;
@@ -40,12 +45,33 @@ namespace SoThuXiGon
         {
             if (e.Data.GetDataPresent(DataFormats.Text))
             {
-                ListBox lb = (ListBox)sender;
-                lb.Items.Add(e.Data.GetData(DataFormats.Text));
+                bool test = false;
+                for (int i = 0; i < lstDanhSach.Items.Count; i++) 
+                {
+                    string st = lstDanhSach.Items[i].ToString();
+                    string data = e.Data.GetData(DataFormats.Text).ToString();
+                    if (data == st)
+                        test = true;
 
+                }
+                if (test == false)
+                {
+                    int newIndex = lstDanhSach.IndexFromPoint(lstDanhSach.PointToClient(new Point(e.X, e.Y)));
+                    lstDanhSach.Items.Remove(e.Data.GetData(DataFormats.Text));
+                    if (newIndex != -1)
+                        lstDanhSach.Items.Insert(newIndex, e.Data.GetData(DataFormats.Text));
+                    else
+                    {
+                        ListBox lb = (ListBox)sender;
+                        lb.Items.Add(e.Data.GetData(DataFormats.Text));
+                    }
+                }
             }
-        }
 
+
+        }
+        bool luu = false;
+   
         private void Save(object sender, EventArgs e)
         {
             StreamWriter write = new StreamWriter("Danhsachthu.txt");
@@ -53,6 +79,7 @@ namespace SoThuXiGon
             foreach (var item in lstDanhSach.Items)
                 write.WriteLine(item.ToString());
             write.Close();
+            luu = true;
 
         }
         private void mnuClose_Click(object sender, EventArgs e)
@@ -95,9 +122,32 @@ namespace SoThuXiGon
 
                                            
         }
-        private void Form1_Load(object sender, EventArgs e)
+        private void btnXoa_Click(object sender, EventArgs e)
         {
-            timer1.Enabled = true;
+            lstDanhSach.Items.Remove(lstDanhSach.SelectedItem);
         }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (luu == false)
+            {
+                DialogResult kq = MessageBox.Show("Bạn có muốn lưu danh sách?", "THÔNG BÁO", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (kq == DialogResult.Yes)
+                {
+                    Save(sender, e);
+                    e.Cancel = false;
+                }
+                else if (kq == DialogResult.No)
+                    e.Cancel = false;
+                else
+                    e.Cancel = true;
+            }
+            else
+                mnuClose_Click(sender, e);
+        }
+
+
+
+
     }
 }
